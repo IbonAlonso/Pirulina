@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pirulina</string>
     <string name="image_of_the_witch">Image of the witch</string>
+    <string name="image_of_the_button">Image of the button</string>
     <string name="user_name">User Name:</string>
     <string name="password">Password:</string>
     <string name="sign_in">Sign In</string>

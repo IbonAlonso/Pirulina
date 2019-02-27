@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Pirulina</string>
     <string name="image_of_the_witch">Sorginaren irudia</string>
+    <string name="image_of_the_button">Botoiaren irudia</string>
     <string name="user_name">Erabiltzaile izena:</string>
     <string name="password">Pasahitza:</string>
-    <string name="sign_in">Hasi Saioa</string>
-    <string name="signed_up_yet">Oraindik baldin ez zara erregistratu hemen egin ahal duzu</string>
-    <string name="sign_up"><u>Erregistratu</u></string>
+    <string name="sign_in">Saioa hai</string>
+    <string name="signed_up_yet">Oraindik izena eman ez baldin baduzu hemen egin dezakezu</string>
+    <string name="sign_up"><u>Izena eman</u></string>
 </resources>

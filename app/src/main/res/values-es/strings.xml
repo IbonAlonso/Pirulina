@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Pirulina</string>
     <string name="image_of_the_witch">Imagen de la bruja</string>
+    <string name="image_of_the_button">Imagen del boton</string>
     <string name="user_name">Nombre de Usuario:</string>
     <string name="password">Contraseña:</string>
     <string name="sign_in">Iniciar Sesion</string>
-    <string name="signed_up_yet">Si aun no estas registrado puedes hacerlo aqui</string>
+    <string name="signed_up_yet">Si aun no estas registrado puedes hacerlo aquí</string>
     <string name="sign_up"><u>Registrarse</u></string>
 </resources>
