@@ -6,4 +6,11 @@
     <string name="sign_in">Iniciar Sesion</string>
     <string name="signed_up_yet">Si aun no estas registrado puedes hacerlo aqui</string>
     <string name="sign_up"><u>Registrarse</u></string>
+    <string name="name">Nombre:</string>
+    <string name="last_name">Apellido:</string>
+    <string name="phone">Movil:</string>
+    <string name="repeat_password">Repetir Contrseña:</string>
+    <string name="register">Registrarse</string>
+    <string name="cancel">Cancelar</string>
+    <string name="create_a_new_user">CREE UN NUEVO USUARIO</string>
 </resources>

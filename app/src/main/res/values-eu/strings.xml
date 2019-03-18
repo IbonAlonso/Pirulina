@@ -6,4 +6,11 @@
     <string name="sign_in">Hasi Saioa</string>
     <string name="signed_up_yet">Oraindik baldin ez zara erregistratu hemen egin ahal duzu</string>
     <string name="sign_up"><u>Erregistratu</u></string>
+    <string name="name">Izena:</string>
+    <string name="last_name">Abizena:</string>
+    <string name="phone">Telefono Zenbakia:</string>
+    <string name="repeat_password">Pasahitza errepikatu:</string>
+    <string name="register">Erregistratu</string>
+    <string name="cancel">Utzi</string>
+    <string name="create_a_new_user">ERABILTZAILE BERRIA SORTU</string>
 </resources>

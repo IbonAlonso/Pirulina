@@ -6,4 +6,11 @@
     <string name="sign_in">Sign In</string>
     <string name="signed_up_yet">If you are not signed up yet you can do it here</string>
     <string name="sign_up"><u>Sign Up</u></string>
+    <string name="name">Name:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="phone">Phone:</string>
+    <string name="repeat_password">Repeat Password:</string>
+    <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
+    <string name="create_a_new_user">CREATE A NEW USER</string>
 </resources>

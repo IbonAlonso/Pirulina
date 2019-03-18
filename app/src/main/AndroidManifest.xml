@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ibgo.pirulina" >
+    package="com.ibgo.pirulina">
 
     <application
         android:allowBackup="true"
@@ -8,8 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/sorgina_trans"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".SignInActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
