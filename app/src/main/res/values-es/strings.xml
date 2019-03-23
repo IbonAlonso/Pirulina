@@ -19,4 +19,6 @@
     <string name="toast_wrong_password">Contraseña Incorrecta</string>
     <string name="toast_invalid_login">Datos Incorrectos</string>
     <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
+    <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
+    <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
 </resources>

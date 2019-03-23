@@ -42,6 +42,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!mPass.getText().toString().equals(mRPass.getText().toString())) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_password_not_validated), Toast.LENGTH_LONG).show();
+                } else if (mUsername.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_empty_username), Toast.LENGTH_LONG).show();
+                } else if (mPass.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_empty_password), Toast.LENGTH_LONG).show();
                 } else {
 
                     SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -55,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                     mEditor.commit();
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_user_created), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                    finish();
                 }
             }
         });
@@ -64,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
             }
         });
     }

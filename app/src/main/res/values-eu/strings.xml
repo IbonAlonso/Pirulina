@@ -13,10 +13,14 @@
     <string name="register">Erregistratu</string>
     <string name="cancel">Utzi</string>
     <string name="create_a_new_user">ERABILTZAILE BERRIA SORTU</string>
+
+    <!--TOASTs-->
     <string name="toast_password_not_validated">Pasahitza bietan izan behar da berdina</string>
     <string name="toast_user_created">Erabiltzailea sortuta</string>
     <string name="toast_login_succesful">Ongi Etorri!</string>
     <string name="toast_wrong_password">Pasahitza Okerra</string>
     <string name="toast_invalid_login">Datu Okerrak</string>
     <string name="dialog_logoff">Saioa itxi nahi duzu?</string>
+    <string name="toast_empty_username">Mesedez bete ezazu Erabiltzaile izena eremua</string>
+    <string name="toast_empty_password">Mesedez bete ezazu Pasahitza eremua</string>
 </resources>
