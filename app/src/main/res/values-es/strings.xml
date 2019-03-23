@@ -13,4 +13,10 @@
     <string name="register">Registrarse</string>
     <string name="cancel">Cancelar</string>
     <string name="create_a_new_user">CREE UN NUEVO USUARIO</string>
+    <string name="toast_password_not_validated">La contraseña deben ser iguales en ambas</string>
+    <string name="toast_user_created">Usuario creado con exito</string>
+    <string name="toast_login_succesful">Bienvenido!</string>
+    <string name="toast_wrong_password">Contraseña Incorrecta</string>
+    <string name="toast_invalid_login">Datos Incorrectos</string>
+    <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
 </resources>

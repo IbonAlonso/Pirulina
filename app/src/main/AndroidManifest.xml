@@ -9,14 +9,16 @@
         android:roundIcon="@drawable/sorgina_trans"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".SignInActivity">
+        <activity android:name=".activity.PurpleButtonActivity"></activity>
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.SignInActivity" />
     </application>
 
 </manifest>
