@@ -34,7 +34,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (correctUser()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_login_succesful), Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(), PurpleButtonActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 }
             }

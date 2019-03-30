@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/title_attacks">
+
+        <menu>
+            <item
+                android:id="@+id/nav_sexist"
+                android:title="@string/option_sexist" />
+            <item
+                android:id="@+id/nav_racist"
+                android:title="@string/option_racist" />
+            <item
+                android:id="@+id/nav_homophobic"
+                android:icon="@android:color/transparent"
+                android:title="@string/option_homophobic" />
+        </menu>
+
+    </item>
+
+    <item android:title="@string/title_information">
+        <menu>
+            <item
+                android:id="@+id/nav_info_points"
+                android:title="@string/option_map" />
+            <item
+                android:id="@+id/nav_info"
+                android:title="@string/option_info" />
+            <item
+                android:id="@+id/nav_about_us"
+                android:icon="@android:color/transparent"
+                android:title="@string/option_about_us" />
+        </menu>
+    </item>
+
+</menu>

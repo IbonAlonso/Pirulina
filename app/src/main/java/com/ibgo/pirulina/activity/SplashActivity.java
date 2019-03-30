@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), SignInActivity.class);
                 finish();
             } else {
-                intent = new Intent(getApplicationContext(), PurpleButtonActivity.class);
+                intent = new Intent(getApplicationContext(), MainActivity.class);
                 finish();
             }
             return null;

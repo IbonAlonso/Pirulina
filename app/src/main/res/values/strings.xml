@@ -13,12 +13,41 @@
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
     <string name="create_a_new_user">CREATE A NEW USER</string>
+    <string name="dialog_logoff">Would you like to log off?</string>
+    <string name="toast_empty_username">Please fill de Username field</string>
+    <string name="toast_empty_password">Please fill de Password field</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TOAST STRINGS-->
     <string name="toast_password_not_validated">The password have to be the same in both</string>
     <string name="toast_user_created">User Created Succesfully</string>
     <string name="toast_login_succesful">Welcome!</string>
     <string name="toast_wrong_password">Incorrect Password</string>
     <string name="toast_invalid_login">Incorrect Data</string>
-    <string name="dialog_logoff">Would you like to log off?</string>
-    <string name="toast_empty_username">Please fill de Username field</string>
-    <string name="toast_empty_password">Please fill de Password field</string>
+
+    <!-- OPTIONS STRINGS -->
+    <string name="option_map">Info Points</string>
+    <string name="option_info">Info</string>
+    <string name="option_sexist">Sexist</string>
+    <string name="option_racist">Racist</string>
+    <string name="option_homophobic">Homophobic</string>
+    <string name="option_about_us">About Us</string>
+
+    <!-- NAV STRINGS -->
+    <string name="navigation_drawer_open">Open Menu</string>
+    <string name="navigation_drawer_close">Close Menu</string>
+    <string name="nav_header_title">Options</string>
+    <string name="nav_header_subtitle">Here you got necessary options</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- ACTION STRINGS -->
+    <string name="action_settings">My User</string>
+    <string name="action_log_out">Log Out</string>
+
+    <!-- TITLE STRINGS -->
+    <string name="title_activity_main">Pirulina</string>
+    <string name="title_attacks">Attacks</string>
+    <string name="title_information">Information</string>
 </resources>

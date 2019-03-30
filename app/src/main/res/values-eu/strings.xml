@@ -14,7 +14,7 @@
     <string name="cancel">Utzi</string>
     <string name="create_a_new_user">ERABILTZAILE BERRIA SORTU</string>
 
-    <!--TOASTs-->
+    <!-- TOASTS -->
     <string name="toast_password_not_validated">Pasahitza bietan izan behar da berdina</string>
     <string name="toast_user_created">Erabiltzailea sortuta</string>
     <string name="toast_login_succesful">Ongi Etorri!</string>
@@ -23,4 +23,28 @@
     <string name="dialog_logoff">Saioa itxi nahi duzu?</string>
     <string name="toast_empty_username">Mesedez bete ezazu Erabiltzaile izena eremua</string>
     <string name="toast_empty_password">Mesedez bete ezazu Pasahitza eremua</string>
+
+    <!-- OPTIONS STRINGS -->
+    <string name="option_map">Informazio puntuak</string>
+    <string name="option_info">Informazioa</string>
+    <string name="option_sexist">Sexista</string>
+    <string name="option_racist">Racista</string>
+    <string name="option_homophobic">Homofobicoa</string>
+    <string name="option_about_us">Nor Gara</string>
+
+    <!-- NAV STRINGS -->
+    <string name="navigation_drawer_open">Ireki Menua</string>
+    <string name="navigation_drawer_close">Itxi Menua</string>
+    <string name="nav_header_title">Aukerak</string>
+    <string name="nav_header_subtitle">Hemen daukazu behar dituzun aukerak</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- ACTION STRINGS -->
+    <string name="action_settings">Nire Erabiltzailea</string>
+    <string name="action_log_out">Saioa Itxi</string>
+
+    <!-- TITLE STRINGS -->
+    <string name="title_activity_main">Pirulina</string>
+    <string name="title_attacks">Erasoak</string>
+    <string name="title_information">Informazioa</string>
 </resources>

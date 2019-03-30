@@ -9,7 +9,10 @@
         android:roundIcon="@drawable/sorgina_trans"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PurpleButtonActivity"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

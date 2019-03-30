@@ -13,12 +13,38 @@
     <string name="register">Registrarse</string>
     <string name="cancel">Cancelar</string>
     <string name="create_a_new_user">CREE UN NUEVO USUARIO</string>
+    <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
+    <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
+    <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
+
+    <!-- TOASTS STRINGS -->
     <string name="toast_password_not_validated">La contraseña deben ser iguales en ambas</string>
     <string name="toast_user_created">Usuario creado con exito</string>
     <string name="toast_login_succesful">Bienvenido!</string>
     <string name="toast_wrong_password">Contraseña Incorrecta</string>
     <string name="toast_invalid_login">Datos Incorrectos</string>
-    <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
-    <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
-    <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
+
+    <!-- OPTIONS STRINGS -->
+    <string name="option_map">Puntos de información</string>
+    <string name="option_info">Información</string>
+    <string name="option_sexist">Sexista</string>
+    <string name="option_racist">Racista</string>
+    <string name="option_homophobic">Homofobico</string>
+    <string name="option_about_us">Quienes Somos</string>
+
+    <!-- NAV STRINGS -->
+    <string name="navigation_drawer_open">Abrir Menu</string>
+    <string name="navigation_drawer_close">Cerrar Menu</string>
+    <string name="nav_header_title">Opciones</string>
+    <string name="nav_header_subtitle">Aquí tienes las opciones necesarias</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- ACTION STRINGS -->
+    <string name="action_settings">Mi Usuario</string>
+    <string name="action_log_out">Cerrar Sesion</string>
+
+    <!-- TITLE STRINGS -->
+    <string name="title_activity_main">Pirulina</string>
+    <string name="title_attacks">Ataques</string>
+    <string name="title_information">Informacion</string>
 </resources>
