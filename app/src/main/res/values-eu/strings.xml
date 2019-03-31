@@ -14,7 +14,7 @@
     <string name="cancel">Utzi</string>
     <string name="create_a_new_user">ERABILTZAILE BERRIA SORTU</string>
 
-    <!-- TOASTS -->
+    <!-- TOASTS STRINGS -->
     <string name="toast_password_not_validated">Pasahitza bietan izan behar da berdina</string>
     <string name="toast_user_created">Erabiltzailea sortuta</string>
     <string name="toast_login_succesful">Ongi Etorri!</string>
@@ -23,6 +23,8 @@
     <string name="dialog_logoff">Saioa itxi nahi duzu?</string>
     <string name="toast_empty_username">Mesedez bete ezazu Erabiltzaile izena eremua</string>
     <string name="toast_empty_password">Mesedez bete ezazu Pasahitza eremua</string>
+    <string name="toast_other_error">Zerbait txarto joan da saioa hasten</string>
+    <string name="toast_wrong_user">Erabiltzailea hori ez da zuzena</string>
 
     <!-- OPTIONS STRINGS -->
     <string name="option_map">Informazio puntuak</string>
@@ -47,4 +49,5 @@
     <string name="title_activity_main">Pirulina</string>
     <string name="title_attacks">Erasoak</string>
     <string name="title_information">Informazioa</string>
+
 </resources>

@@ -1,8 +1,13 @@
 package com.ibgo.pirulina.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +16,52 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibgo.pirulina.R;
+import com.ibgo.pirulina.model.SessionDataController;
 import com.ibgo.pirulina.model.Util;
+import com.ibgo.pirulina.model.json.JSONController;
 
 public class SignInActivity extends AppCompatActivity {
+
+    private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 0;
+    private static Object lock = new Object();
 
     private TextView mSignUp;
     private TextView mUsername;
     private TextView mPassword;
     private Button mSignIn;
+    private boolean mPermissionsGranted;
+
+    private boolean askForPermissions() {
+        if (mPermissionsGranted)
+            return true;
+
+        // Ask for laction permissions and saves last known location
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_FINE_LOCATION);
+        } else {
+            mPermissionsGranted = true;
+            SessionDataController.getInstance().setCurrentPos(getApplicationContext());
+        }
+        return mPermissionsGranted;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mPermissionsGranted = true;
+                    SessionDataController.getInstance().setCurrentPos(this);
+                } else {
+                    mPermissionsGranted = false;
+                }
+
+                lock.notifyAll();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +75,13 @@ public class SignInActivity extends AppCompatActivity {
         mSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (correctUser()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_login_succesful), Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
+
+                if (askForPermissions()) {
+                    if (correctUser()) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_login_succesful), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
                 }
             }
         });
@@ -47,6 +93,9 @@ public class SignInActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
             }
         });
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     private boolean correctUser() {

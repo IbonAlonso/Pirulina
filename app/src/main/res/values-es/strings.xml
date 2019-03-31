@@ -8,21 +8,24 @@
     <string name="sign_up"><u>Registrarse</u></string>
     <string name="name">Nombre:</string>
     <string name="last_name">Apellido:</string>
-    <string name="phone">Movil:</string>
+    <string name="phone">Móvil:</string>
     <string name="repeat_password">Repetir Contrseña:</string>
     <string name="register">Registrarse</string>
     <string name="cancel">Cancelar</string>
     <string name="create_a_new_user">CREE UN NUEVO USUARIO</string>
     <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
-    <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
-    <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
+
 
     <!-- TOASTS STRINGS -->
     <string name="toast_password_not_validated">La contraseña deben ser iguales en ambas</string>
-    <string name="toast_user_created">Usuario creado con exito</string>
+    <string name="toast_user_created">Usuario creado con éxito</string>
     <string name="toast_login_succesful">Bienvenido!</string>
     <string name="toast_wrong_password">Contraseña Incorrecta</string>
     <string name="toast_invalid_login">Datos Incorrectos</string>
+    <string name="toast_other_error">Algo fallo al intentar iniciar sesion</string>
+    <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
+    <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
+    <string name="toast_wrong_user">El usuario no existe</string>
 
     <!-- OPTIONS STRINGS -->
     <string name="option_map">Puntos de información</string>
