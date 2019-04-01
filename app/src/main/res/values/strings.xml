@@ -13,6 +13,7 @@
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
     <string name="create_a_new_user">CREATE A NEW USER</string>
+    <string name="edit">Edit</string>
 
     <!-- TOAST STRINGS-->
     <string name="toast_password_not_validated">The password have to be the same in both</string>
@@ -49,4 +50,6 @@
     <string name="title_activity_main">Pirulina</string>
     <string name="title_attacks">Attacks</string>
     <string name="title_information">Information</string>
+    <string name="ok">Ok</string>
+
 </resources>

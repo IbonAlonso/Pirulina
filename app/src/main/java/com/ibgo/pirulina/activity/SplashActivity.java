@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ibgo.pirulina.R;
+import com.ibgo.pirulina.model.pojo.User;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -38,7 +39,13 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), SignInActivity.class);
                 finish();
             } else {
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+                User mUser = new User();
+                mUser.setLogin(mPreferences.getString("user", ""));
+                mUser.setName(mPreferences.getString("name", ""));
+                mUser.setLast(mPreferences.getString("last", ""));
+                mUser.setPhone(mPreferences.getString("phone", ""));
+                mUser.setPass(mPreferences.getString("password", ""));
+                intent = MainActivity.newIntent(getApplicationContext(), mUser);
                 finish();
             }
             return null;

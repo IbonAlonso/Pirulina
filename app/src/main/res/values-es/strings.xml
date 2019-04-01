@@ -14,7 +14,7 @@
     <string name="cancel">Cancelar</string>
     <string name="create_a_new_user">CREE UN NUEVO USUARIO</string>
     <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
-
+    <string name="edit">Editar</string>
 
     <!-- TOASTS STRINGS -->
     <string name="toast_password_not_validated">La contraseña deben ser iguales en ambas</string>
@@ -50,4 +50,6 @@
     <string name="title_activity_main">Pirulina</string>
     <string name="title_attacks">Ataques</string>
     <string name="title_information">Informacion</string>
+    <string name="ok">Ok</string>
+
 </resources>

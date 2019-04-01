@@ -1,16 +1,15 @@
 package com.ibgo.pirulina.activity;
 
 import android.app.AlertDialog;
+import android.net.Uri;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,15 +20,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ibgo.pirulina.R;
+import com.ibgo.pirulina.fragments.MyUserFragment;
 import com.ibgo.pirulina.fragments.PurpleButtonFragment;
+import com.ibgo.pirulina.model.pojo.User;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MyUserFragment.OnFragmentInteractionListener {
+
+    private static final String EXTRA_USER =
+            "com.ibgo.pirulina.activity.user";
+    private static User mUser;
+
+    public static Intent newIntent(Context packageContext, User user) {
+        Intent intent = new Intent(packageContext, MainActivity.class);
+        intent.putExtra(EXTRA_USER, user);
+        mUser = user;
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -103,8 +116,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_my_user) {
+            MyUserFragment fragment = MyUserFragment.newIntent(mUser);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.addToBackStack(null);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.replace(R.id.fragment_container, fragment).commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -123,5 +140,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

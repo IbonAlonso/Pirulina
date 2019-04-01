@@ -19,6 +19,7 @@ import com.ibgo.pirulina.R;
 import com.ibgo.pirulina.model.SessionDataController;
 import com.ibgo.pirulina.model.Util;
 import com.ibgo.pirulina.model.json.JSONController;
+import com.ibgo.pirulina.model.pojo.User;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class SignInActivity extends AppCompatActivity {
     private TextView mPassword;
     private Button mSignIn;
     private boolean mPermissionsGranted;
+    private User mUser;
 
     private boolean askForPermissions() {
         if (mPermissionsGranted)
@@ -79,7 +81,8 @@ public class SignInActivity extends AppCompatActivity {
                 if (askForPermissions()) {
                     if (correctUser()) {
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_login_succesful), Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = MainActivity.newIntent(getApplicationContext(), mUser);
+                        startActivity(intent);
                         finish();
                     }
                 }
@@ -100,13 +103,19 @@ public class SignInActivity extends AppCompatActivity {
 
     private boolean correctUser() {
 
-        Boolean correct = false;
+        boolean correct = false;
 
         SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
         if ((mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser")))
                 && Util.md5(mPassword.getText().toString()).equals(mPreferences.getString("password", "nonPass"))) {
             correct = true;
+            mUser = new User();
+            mUser.setLogin(mUsername.getText().toString());
+            mUser.setName(mPreferences.getString("name", ""));
+            mUser.setLast(mPreferences.getString("last", ""));
+            mUser.setPhone(mPreferences.getString("phone", ""));
+            mUser.setPass(mPreferences.getString("password", ""));
         } else if (mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser"))) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_password), Toast.LENGTH_LONG).show();
         } else {

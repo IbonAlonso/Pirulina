@@ -13,6 +13,7 @@
     <string name="register">Erregistratu</string>
     <string name="cancel">Utzi</string>
     <string name="create_a_new_user">ERABILTZAILE BERRIA SORTU</string>
+    <string name="edit">Editatu</string>
 
     <!-- TOASTS STRINGS -->
     <string name="toast_password_not_validated">Pasahitza bietan izan behar da berdina</string>
@@ -49,5 +50,6 @@
     <string name="title_activity_main">Pirulina</string>
     <string name="title_attacks">Erasoak</string>
     <string name="title_information">Informazioa</string>
+    <string name="ok">Ok</string>
 
 </resources>
