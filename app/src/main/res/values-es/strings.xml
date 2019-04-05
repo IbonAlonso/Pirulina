@@ -13,7 +13,6 @@
     <string name="register">Registrarse</string>
     <string name="cancel">Cancelar</string>
     <string name="create_a_new_user">CREE UN NUEVO USUARIO</string>
-    <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
     <string name="edit">Editar</string>
 
     <!-- TOASTS STRINGS -->
@@ -26,6 +25,10 @@
     <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
     <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
     <string name="toast_wrong_user">El usuario no existe</string>
+
+    <!-- DIALOG STRINGS -->
+    <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
+    <string name="dialog_goback">¿Deseas volver atras y borrar los cambios?</string>
 
     <!-- OPTIONS STRINGS -->
     <string name="option_map">Puntos de información</string>

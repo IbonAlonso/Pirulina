@@ -21,11 +21,14 @@
     <string name="toast_login_succesful">Ongi Etorri!</string>
     <string name="toast_wrong_password">Pasahitza Okerra</string>
     <string name="toast_invalid_login">Datu Okerrak</string>
-    <string name="dialog_logoff">Saioa itxi nahi duzu?</string>
     <string name="toast_empty_username">Mesedez bete ezazu Erabiltzaile izena eremua</string>
     <string name="toast_empty_password">Mesedez bete ezazu Pasahitza eremua</string>
     <string name="toast_other_error">Zerbait txarto joan da saioa hasten</string>
     <string name="toast_wrong_user">Erabiltzailea hori ez da zuzena</string>
+
+    <!-- DIALOG STRINGS -->
+    <string name="dialog_logoff">Saioa itxi nahi duzu?</string>
+    <string name="dialog_goback">Atzera joan nahi duzu eta aldaketak ezabatu?</string>
 
     <!-- OPTIONS STRINGS -->
     <string name="option_map">Informazio puntuak</string>

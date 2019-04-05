@@ -22,10 +22,13 @@
     <string name="toast_wrong_password">Incorrect Password</string>
     <string name="toast_invalid_login">Incorrect Data</string>
     <string name="toast_other_error">Something failed trying to log in</string>
-    <string name="dialog_logoff">Would you like to log off?</string>
     <string name="toast_empty_username">Please fill de Username field</string>
     <string name="toast_empty_password">Please fill de Password field</string>
     <string name="toast_wrong_user">That User doesn\'t exist</string>
+
+    <!-- DIALOG STRINGS -->
+    <string name="dialog_logoff">Would you like to log off?</string>
+    <string name="dialog_goback">Would you like to go back and delete changes?</string>
 
     <!-- OPTIONS STRINGS -->
     <string name="option_map">Info Points</string>
