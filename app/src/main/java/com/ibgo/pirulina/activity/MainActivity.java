@@ -75,18 +75,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.dialog_logoff))
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            deleteLoginData();
-                            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-                            finish();
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show();
+            int count = getFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                getFragmentManager().popBackStack();
+            } else {
+                getFragmentManager().popBackStack();
+            }
         }
     }
 
