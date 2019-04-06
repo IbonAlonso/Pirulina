@@ -48,11 +48,13 @@
     <!-- ACTION STRINGS -->
     <string name="action_settings">My User</string>
     <string name="action_log_out">Log Out</string>
+    <string name="action_contacts">My Contacts</string>
 
     <!-- TITLE STRINGS -->
     <string name="title_activity_main">Pirulina</string>
     <string name="title_attacks">Attacks</string>
     <string name="title_information">Information</string>
     <string name="ok">Ok</string>
+
 
 </resources>

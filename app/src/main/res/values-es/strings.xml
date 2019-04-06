@@ -48,6 +48,7 @@
     <!-- ACTION STRINGS -->
     <string name="action_settings">Mi Usuario</string>
     <string name="action_log_out">Cerrar Sesion</string>
+    <string name="action_contacts">Mis Contactos</string>
 
     <!-- TITLE STRINGS -->
     <string name="title_activity_main">Pirulina</string>

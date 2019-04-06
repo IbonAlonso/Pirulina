@@ -7,10 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class User implements Serializable, DatabaseObject {
 
-    private int mId;
+    private UUID mId;
     private String mLogin;
     private String mPass;
     private String mName;
@@ -21,11 +22,11 @@ public class User implements Serializable, DatabaseObject {
 
     }
 
-    public int getId() {
+    public UUID getId() {
         return mId;
     }
 
-    public void setId(int mId) {
+    public void setId(UUID mId) {
         this.mId = mId;
     }
 

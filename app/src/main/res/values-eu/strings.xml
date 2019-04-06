@@ -48,6 +48,7 @@
     <!-- ACTION STRINGS -->
     <string name="action_settings">Nire Erabiltzailea</string>
     <string name="action_log_out">Saioa Itxi</string>
+    <string name="action_contacts">Nire Kontaktuak</string>
 
     <!-- TITLE STRINGS -->
     <string name="title_activity_main">Pirulina</string>
