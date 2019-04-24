@@ -9,8 +9,10 @@ import android.support.v4.app.ActivityCompat;
 
 import com.ibgo.pirulina.model.json.JSONBuilder;
 import com.ibgo.pirulina.model.json.JSONController;
+import com.ibgo.pirulina.model.pojo.Contact;
 import com.ibgo.pirulina.model.pojo.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ public class SessionDataController {
 
     private Util.Position mCurrentPos;
     private User mUser;
+    private ArrayList<Contact> mContacts;
 
     public static SessionDataController getInstance() {
         if (null == ourInstance) {
@@ -76,6 +79,18 @@ public class SessionDataController {
 
     public Util.Position getCurrentPos() {
         return mCurrentPos;
+    }
+
+    public ArrayList<Contact> getContacts() {
+        return mContacts;
+    }
+
+    public void setContacts(ArrayList<Contact> mContacts) {
+        this.mContacts = mContacts;
+    }
+
+    public int contactSize() {
+        return mContacts.size();
     }
 
     public User getUser() {

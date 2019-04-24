@@ -43,16 +43,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager mFm = getSupportFragmentManager();
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -125,12 +125,31 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_my_user) {
-            MyUserFragment fragment = MyUserFragment.newIntent(mUser);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.addToBackStack(null);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.replace(R.id.fragment_container, fragment).commit();
+        switch (id) {
+            case R.id.action_my_user:
+                MyUserFragment fragment = MyUserFragment.newIntent(mUser);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(null);
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.replace(R.id.fragment_container, fragment).commit();
+                break;
+            case R.id.action_log_out:
+                new AlertDialog.Builder(this)
+                        .setMessage(getString(R.string.dialog_logoff))
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                deleteLoginData();
+                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show();
+                break;
+            case R.id.action_contacts:
+                /*TODO Contactos*/
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -142,10 +161,27 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-
+            case R.id.nav_sexist:
+                /*TODO Opcion ataque sexista*/
+                break;
+            case R.id.nav_racist:
+                /*TODO Opcion ataque racista*/
+                break;
+            case R.id.nav_homophobic:
+                /*TODO Opcion ataque homofobico*/
+                break;
+            case R.id.nav_info_points:
+                /*TODO Opcion puntos de informacion*/
+                break;
+            case R.id.nav_info:
+                /*TODO Opcion informacion*/
+                break;
+            case R.id.nav_about_us:
+                /*TODO Quienes somos*/
+                break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

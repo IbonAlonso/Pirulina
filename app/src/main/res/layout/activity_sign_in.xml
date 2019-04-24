@@ -14,7 +14,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/image_of_the_witch"
-        android:src="@drawable/sorgina_trans"
+        android:src="@drawable/txanoa_trans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
