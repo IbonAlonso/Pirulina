@@ -1,5 +1,6 @@
 package com.ibgo.pirulina.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.ibgo.pirulina.R;
 import com.ibgo.pirulina.fragments.MyUserFragment;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private static final String EXTRA_USER =
             "com.ibgo.pirulina.activity.user";
     private static User mUser;
+    private static Dialog adviceDialog;
 
     public static Intent newIntent(Context packageContext, User user) {
         Intent intent = new Intent(packageContext, MainActivity.class);
@@ -163,12 +168,15 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_sexist:
                 /*TODO Opcion ataque sexista*/
+                showAdviceDialog(R.string.option_sexist);
                 break;
             case R.id.nav_racist:
                 /*TODO Opcion ataque racista*/
+                showAdviceDialog(R.string.option_racist);
                 break;
             case R.id.nav_homophobic:
                 /*TODO Opcion ataque homofobico*/
+                showAdviceDialog(R.string.option_homophobic);
                 break;
             case R.id.nav_info_points:
                 /*TODO Opcion puntos de informacion*/
@@ -184,6 +192,29 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showAdviceDialog(int type) {
+        adviceDialog = new Dialog(MainActivity.this);
+        adviceDialog.setContentView(R.layout.dialog_layout);
+        ImageView image = adviceDialog.findViewById(R.id.img_dialog);
+        switch(type){
+            case R.string.option_homophobic:
+                adviceDialog.setTitle(R.string.option_homophobic);
+                image.setImageResource(R.drawable.homofobikoak);
+                break;
+            case R.string.option_racist:
+                adviceDialog.setTitle(R.string.option_racist);
+                image.setImageResource(R.drawable.arrazistak);
+                break;
+            case R.string.option_sexist:
+                adviceDialog.setTitle(R.string.option_sexist);
+                image.setImageResource(R.drawable.sexistak);
+                break;
+        }
+
+        adviceDialog.show();
+
     }
 
     @Override

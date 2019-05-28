@@ -29,6 +29,88 @@
     <!-- DIALOG STRINGS -->
     <string name="dialog_logoff">¿Deseas cerrar sesión?</string>
     <string name="dialog_goback">¿Deseas volver atras y borrar los cambios?</string>
+    <string name="dialog_sexist">DENUNCIAR <b>092 / 112</b>
+
+NO DENUNCIAR <b>94 470 14 60</b>
+
+DENUNCIAR:
+
+· En caso de violación: no lavarse,
+ni cambiarse de ropa, ni comer ni beber.
+
+· Ir al hospital: hacer reconocimiento médico,
+tramitar denuncia y pedir copia del informe.
+
+· Ir al juzgado de guardia: realizar denuncia,
+solicitar informe médico y copia de denuncia.
+
+NO DENUNCIAR:
+
+· Puedes ir al hospital pero ahí es obligatorio
+tramitar denuncia.
+
+PARA MÁS INFORMACIÓN:
+
+Servicio municipal especializado
+94 420 48 38
+(8h - 15h)</string>
+    <string name="dialog_homophobic">DENUNCIAR / NO DENUNCIAR:
+
+Aldarte-Berdindu
+94 423 73 96
+(10h - 14h)
+
+Errespetuz
+675 459 317
+(10h - 18h)
+
+Estas asociaciones te ayudarán con
+cualquier pregunta y valorarán otros
+recursos en el caso de no querer
+hacer una denuncia.
+
+·AGRESIÓN FÍSICA: identificar agresor,
+sacar foto a ser posible. Acudir a la
+asistencia médica y realizar reconocimiento,
+después ir al juzgado de guardia.
+
+·AGRESIÓN VERBAL: también pueden
+ser denunciadas.
+
+PARA MÁS INFORMACIÓN:
+
+Servicio municipal urgencias sociales
+94 470 14 60
+</string>
+    <string name="dialog_racist">DENUNCIAR:
+
+·AGRESIÓN FÍSICA: identificar agresor,
+sacar foto a ser posible. Acudir a la
+asistencia médica y realizar reconocimiento,
+después ir al juzgado de guardia.
+
+·AGRESIÓN VERBAL: también pueden
+ser denunciadas.
+
+
+NO DENUNCIAR:
+
+· Puedes ir al hospital pero ahí es obligatorio
+tramitar denuncia.
+· Llamar a SOS RACISMO para valorar
+otros recursos disponibles.
+688 62 99 96
+94 479 03 10
+
+PARA MÁS INFORMACIÓN:
+
+Servicio municipal urgencias sociales
+94 470 14 60
+
+SOS RACISMO
+688 62 99 96
+94 479 03 10
+</string>
 
     <!-- OPTIONS STRINGS -->
     <string name="option_map">Puntos de información</string>
