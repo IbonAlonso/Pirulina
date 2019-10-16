@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -105,23 +107,35 @@ public class SignInActivity extends AppCompatActivity {
 
         boolean correct = false;
 
-        SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-
-        if ((mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser")))
-                && Util.md5(mPassword.getText().toString()).equals(mPreferences.getString("password", "nonPass"))) {
-            correct = true;
-            mUser = new User();
-            mUser.setLogin(mUsername.getText().toString());
-            mUser.setName(mPreferences.getString("name", ""));
-            mUser.setLast(mPreferences.getString("last", ""));
-            mUser.setPhone(mPreferences.getString("phone", ""));
-            mUser.setPass(mPreferences.getString("password", ""));
-        } else if (mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser"))) {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_password), Toast.LENGTH_LONG).show();
+        if (isNetworkAvailable()) {
+            byte errorCode = JSONController.logInUser(mUsername.getText().toString().trim(), Util.md5(mPassword.getText().toString().trim()));
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_invalid_login), Toast.LENGTH_LONG).show();
+
+            SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+
+            if ((mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser")))
+                    && Util.md5(mPassword.getText().toString()).equals(mPreferences.getString("password", "nonPass"))) {
+                correct = true;
+                mUser = new User();
+                mUser.setLogin(mUsername.getText().toString());
+                mUser.setName(mPreferences.getString("name", ""));
+                mUser.setLast(mPreferences.getString("last", ""));
+                mUser.setPhone(mPreferences.getString("phone", ""));
+                mUser.setPass(mPreferences.getString("password", ""));
+            } else if (mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser"))) {
+                Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_password), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.toast_invalid_login), Toast.LENGTH_LONG).show();
+            }
         }
 
         return correct;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

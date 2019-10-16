@@ -19,17 +19,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.ibgo.pirulina.model.json.JSONTag.RESPONSE_KO;
 import static com.ibgo.pirulina.model.json.JSONTag.TAG_CURRENT_USER;
-import static com.ibgo.pirulina.model.json.JSONTag.TAG_ERROR;
+import static com.ibgo.pirulina.model.json.JSONTag.TAG_MESSAGE;
 
 public abstract class JSONController {
 
     /* ///////// START OF COMMON CONFIG ///////// */
-    private static final String DB = "proyecto";
+    private static final String DB = "pirulina";
     /* *** Error Codes *** */
     public static final byte NO_ERROR = 0;
     public static final byte OTHER_ERROR = 1;
     public static final byte INPUT_ERROR = 2;
+    public static final byte USER_NOT_EXIST_ERROR = 4;
     public static final byte EMPTY = -1;
     public static final byte USER_EMPTY = 3;
 
@@ -38,7 +40,10 @@ public abstract class JSONController {
     private static final String LINK = "&";
     private static final String DATA_TABLE = "data_table[]=";
     /* *** URL Configuration *** */
-    private static final String HOST_GET = "http:/92.187.158.213:3307/json/get_json.php?";
+    private static final String MAIN_HOST = "http://85.61.150.74:3308/piruapi";
+    private static final String FIND_USER = "/loginUser?";
+    private static final String LOGIN_PARAM = "login=";
+    private static final String PASS_PARAM = "password=";
     private static final String USER_FIELD = "LOGIN";
     private static final String USER_TABLE = "USERS";
     private static final String PASS_FIELD = "PASSWORD";
@@ -46,15 +51,16 @@ public abstract class JSONController {
     /* *** Database Admin User *** */
     private static final String USERNAME = "Pirulina";
     private static final String PASSWORD = "dummy";
+
     /* *** Default URLs *** */
-    private static final String BASE_URL_GET = HOST_GET + "db=" + DB
+    /*private static final String BASE_URL_GET = MAIN_HOST + "db=" + DB
             + LINK + "users_table=" + USER_TABLE
             + LINK + "username_field=" + USER_FIELD
             + LINK + "password_field=" + PASS_FIELD;
     private static final String ADMIN_URL_GET = BASE_URL_GET
             + LINK + "username=" + USERNAME
             + LINK + "password=" + PASSWORD
-            + LINK + "hash=" + HASH_MODE;
+            + LINK + "hash=" + HASH_MODE;*/
     private static String mUserURL;
 
     /* ///////// START OF SET CONFIG ///////// */
@@ -71,7 +77,7 @@ public abstract class JSONController {
 
         try {
             JSONObject json = new JSONObject(result);
-            if (json.has(TAG_ERROR)) {
+            if (json.has(TAG_MESSAGE)) {
                 return OTHER_ERROR;
             }
         } catch (JSONException e) {
@@ -82,19 +88,16 @@ public abstract class JSONController {
     }
 
     public static byte logInUser(String username, String password) {
-        mUserURL = BASE_URL_GET + LINK + "username=" + username
-                + LINK + "password=" + password
-                + LINK + "hash=" + HASH_MODE;
+        mUserURL = MAIN_HOST + FIND_USER + LOGIN_PARAM + username + LINK + PASS_PARAM + password;
 
-        String result = doRequestGET((mUserURL + LINK + DATA_TABLE + JSONTag.TAG_DUAL
-                + LINK + "get_user=true"));
+        String result = doRequestGET((mUserURL));
 
         try {
             SessionDataController controller = SessionDataController.getInstance();
             HashMap<String, List<DatabaseObject>> data = parseJSON(result);
 
             // Check for errors
-            if (data.containsKey(TAG_ERROR)) {
+            if (data.get(TAG_MESSAGE).equals(RESPONSE_KO)) {
                 return INPUT_ERROR;
             }
             if (data.isEmpty()) {
@@ -219,16 +222,17 @@ public abstract class JSONController {
     }
 
     private static byte handleError(JSONObject json) throws JSONException {
-        if (!json.has(TAG_ERROR)) {
+        if (!json.get(TAG_MESSAGE).equals(JSONTag.RESPONSE_KO)) {
             return NO_ERROR;
         }
 
-        final String USER_ERROR = "Invalid username or password";
-        String error = (String) json.get(TAG_ERROR);
+        String error = (String) json.get(JSONTag.TAG_DETAILS);
         System.out.println(error);
 
-        if (USER_ERROR.equalsIgnoreCase(error)) {
+        if (error.equalsIgnoreCase(JSONTag.RESPONSE_WRONG_PASSWORD)) {
             return INPUT_ERROR;
+        } else if (error.equalsIgnoreCase(JSONTag.RESPONSE_NOT_EXIST)){
+            return USER_NOT_EXIST_ERROR;
         }
 
         return OTHER_ERROR;
