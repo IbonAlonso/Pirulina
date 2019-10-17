@@ -2,6 +2,7 @@ package com.ibgo.pirulina.model.json;
 
 import com.ibgo.pirulina.model.DatabaseObject;
 import com.ibgo.pirulina.model.SessionDataController;
+import com.ibgo.pirulina.model.pojo.Response;
 import com.ibgo.pirulina.model.pojo.User;
 
 import org.json.JSONArray;
@@ -20,8 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.ibgo.pirulina.model.json.JSONTag.RESPONSE_KO;
+import static com.ibgo.pirulina.model.json.JSONTag.RESPONSE_NOT_EXIST;
+import static com.ibgo.pirulina.model.json.JSONTag.RESPONSE_WRONG_PASSWORD;
 import static com.ibgo.pirulina.model.json.JSONTag.TAG_CURRENT_USER;
+import static com.ibgo.pirulina.model.json.JSONTag.TAG_DETAILS;
 import static com.ibgo.pirulina.model.json.JSONTag.TAG_MESSAGE;
+import static com.ibgo.pirulina.model.json.JSONTag.TAG_REQUEST;
 
 public abstract class JSONController {
 
@@ -42,8 +47,11 @@ public abstract class JSONController {
     /* *** URL Configuration *** */
     private static final String MAIN_HOST = "http://85.61.150.74:3308/piruapi";
     private static final String FIND_USER = "/loginUser?";
+    private static final String GET_USER = "/getUser?";
     private static final String LOGIN_PARAM = "login=";
     private static final String PASS_PARAM = "password=";
+    public static final String URL_LOGIN_USER = "loginUser";
+    public static final String URL_INSERT_USER = "insertUser";
     private static final String USER_FIELD = "LOGIN";
     private static final String USER_TABLE = "USERS";
     private static final String PASS_FIELD = "PASSWORD";
@@ -97,17 +105,27 @@ public abstract class JSONController {
             HashMap<String, List<DatabaseObject>> data = parseJSON(result);
 
             // Check for errors
-            if (data.get(TAG_MESSAGE).equals(RESPONSE_KO)) {
-                return INPUT_ERROR;
-            }
-            if (data.isEmpty()) {
-                return USER_EMPTY;
+            if (((Response) (data.get(TAG_CURRENT_USER)).get(0)).getMessage().equals(RESPONSE_KO)) {
+                if (((Response) (data.get(TAG_CURRENT_USER)).get(0)).getDetails().equals(RESPONSE_WRONG_PASSWORD)) {
+                    return INPUT_ERROR;
+                }
+                if (((Response) (data.get(TAG_CURRENT_USER)).get(0)).getDetails().equals(RESPONSE_NOT_EXIST)) {
+                    return USER_NOT_EXIST_ERROR;
+                }
+                if (data.isEmpty()) {
+                    return USER_EMPTY;
+                }
             }
 
-            // Insert current user
-            User usuario = (User) data.get(TAG_CURRENT_USER).get(0);
-            mCurrentUser = usuario;
-            controller.setUser(usuario);
+            mUserURL = MAIN_HOST + GET_USER + LOGIN_PARAM + username;
+
+            result = doRequestGET(mUserURL);
+
+            data = parseJSON(result);
+
+            User user = (User) data.get(TAG_CURRENT_USER).get(0);
+            mCurrentUser = user;
+            controller.setUser(user);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -182,7 +200,22 @@ public abstract class JSONController {
 
         byte errorCode = handleError(json);
         if (errorCode == NO_ERROR) { // If there has been no errors in the doRequest
-            for (String tag : dataTables) { // Each data table requested
+            if (json.has(TAG_REQUEST)) {
+                switch ((String) json.get(TAG_REQUEST)) {
+                    case URL_LOGIN_USER:
+                        object = new Response();
+                        data = new ArrayList<>();
+                        data.add(object.fromJSON(json));
+                        fullData.put(TAG_CURRENT_USER, data);
+                        break;
+                }
+            } else if (json.has(JSONTag.User.TAG_LOGIN)) {
+                object = new User();
+                data = new ArrayList<>();
+                data.add(object.fromJSON(json));
+                fullData.put(TAG_CURRENT_USER, data);
+            }
+            /*for (String tag : dataTables) { // Each data table requested
                 boolean validTag = true;
                 jsonData = json.getJSONObject(JSONTag.TAG_DATA).getJSONArray(tag);
 
@@ -203,7 +236,7 @@ public abstract class JSONController {
                 if (!data.isEmpty()) {
                     fullData.put(tag, data);
                 }
-            }
+            }*/
 
             // Check if there is get_user in doRequest
             if (json.has(TAG_CURRENT_USER)) {
@@ -222,17 +255,21 @@ public abstract class JSONController {
     }
 
     private static byte handleError(JSONObject json) throws JSONException {
-        if (!json.get(TAG_MESSAGE).equals(JSONTag.RESPONSE_KO)) {
+        if (json.has(TAG_MESSAGE)) {
+            if (!json.get(TAG_MESSAGE).equals(JSONTag.RESPONSE_KO)) {
+                return NO_ERROR;
+            }
+
+            String error = (String) json.get(JSONTag.TAG_DETAILS);
+            System.out.println(error);
+
+            if (error.equalsIgnoreCase(JSONTag.RESPONSE_WRONG_PASSWORD)) {
+                return INPUT_ERROR;
+            } else if (error.equalsIgnoreCase(JSONTag.RESPONSE_NOT_EXIST)) {
+                return USER_NOT_EXIST_ERROR;
+            }
+        } else if (json.has(JSONTag.User.TAG_LOGIN)) {
             return NO_ERROR;
-        }
-
-        String error = (String) json.get(JSONTag.TAG_DETAILS);
-        System.out.println(error);
-
-        if (error.equalsIgnoreCase(JSONTag.RESPONSE_WRONG_PASSWORD)) {
-            return INPUT_ERROR;
-        } else if (error.equalsIgnoreCase(JSONTag.RESPONSE_NOT_EXIST)){
-            return USER_NOT_EXIST_ERROR;
         }
 
         return OTHER_ERROR;

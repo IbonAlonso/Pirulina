@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
+import android.se.omapi.Session;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button mSignIn;
     private boolean mPermissionsGranted;
     private User mUser;
+    SessionDataController controller;
 
     private boolean askForPermissions() {
         if (mPermissionsGranted)
@@ -47,7 +49,7 @@ public class SignInActivity extends AppCompatActivity {
                     MY_PERMISSIONS_REQUEST_FINE_LOCATION);
         } else {
             mPermissionsGranted = true;
-            SessionDataController.getInstance().setCurrentPos(getApplicationContext());
+            controller.setCurrentPos(getApplicationContext());
         }
         return mPermissionsGranted;
     }
@@ -72,6 +74,8 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        controller = SessionDataController.getInstance();
+
         mUsername = findViewById(R.id.edtUserName);
         mPassword = findViewById(R.id.edtPassword);
 
@@ -83,7 +87,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (askForPermissions()) {
                     if (correctUser()) {
                         Toast.makeText(getApplicationContext(), getString(R.string.toast_login_succesful), Toast.LENGTH_LONG).show();
-                        Intent intent = MainActivity.newIntent(getApplicationContext(), mUser);
+                        Intent intent = MainActivity.newIntent(getApplicationContext(), controller.getUser());
                         startActivity(intent);
                         finish();
                     }
@@ -109,6 +113,10 @@ public class SignInActivity extends AppCompatActivity {
 
         if (isNetworkAvailable()) {
             byte errorCode = JSONController.logInUser(mUsername.getText().toString().trim(), Util.md5(mPassword.getText().toString().trim()));
+            switch (errorCode){
+                case JSONController.NO_ERROR:
+                    correct = true;
+            }
         } else {
 
             SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -122,6 +130,7 @@ public class SignInActivity extends AppCompatActivity {
                 mUser.setLast(mPreferences.getString("last", ""));
                 mUser.setPhone(mPreferences.getString("phone", ""));
                 mUser.setPass(mPreferences.getString("password", ""));
+                controller.setUser(mUser);
             } else if (mUsername.getText().toString().equals(mPreferences.getString("user", "nonUser"))) {
                 Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_password), Toast.LENGTH_LONG).show();
             } else {
