@@ -11,7 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibgo.pirulina.R;
+import com.ibgo.pirulina.model.SessionDataController;
 import com.ibgo.pirulina.model.Util;
+import com.ibgo.pirulina.model.json.JSONController;
+import com.ibgo.pirulina.model.pojo.User;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView mPhone;
     private TextView mPass;
     private TextView mRPass;
+    private SessionDataController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +51,18 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (mPass.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), getString(R.string.toast_empty_password), Toast.LENGTH_LONG).show();
                 } else {
-
-                    SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-
-                    SharedPreferences.Editor mEditor = mPreferences.edit();
-                    mEditor.putString("user", mUsername.getText().toString());
-                    mEditor.putString("name", mName.getText().toString());
-                    mEditor.putString("last", mLast.getText().toString());
-                    mEditor.putString("phone", mPhone.getText().toString());
-                    mEditor.putString("password", Util.md5(mPass.getText().toString()));
-                    mEditor.commit();
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_user_created), Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                    User user = saveUserInSharedPrefs();
+                    if (Util.isNetworkAvailable(getApplicationContext())) {
+                        controller = SessionDataController.getInstance();
+                        byte error = controller.insertUser(user);
+                        if (error == JSONController.NO_ERROR) {
+                            controller.setUser(user);
+                            Toast.makeText(getApplicationContext(), getString(R.string.toast_user_created_success), Toast.LENGTH_SHORT).show();
+                        } else if (error == JSONController.OTHER_ERROR) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.toast_something_gonne_wrong), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    startActivity(MainActivity.newIntent(getApplicationContext(), user));
                     finish();
                 }
             }
@@ -72,5 +76,34 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private User saveUserInSharedPrefs() {
+        SharedPreferences mPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+
+        String login = mUsername.getText().toString();
+        String name = mName.getText().toString();
+        String last = mLast.getText().toString();
+        String phone = mPhone.getText().toString();
+        String password = Util.md5(mPass.getText().toString());
+
+        SharedPreferences.Editor mEditor = mPreferences.edit();
+        mEditor.putString("user", login);
+        mEditor.putString("name", name);
+        mEditor.putString("last", last);
+        mEditor.putString("phone", phone);
+        mEditor.putString("password", password);
+        mEditor.commit();
+
+        User user = new User();
+        user.setLogin(login);
+        user.setLast(last);
+        user.setName(name);
+        user.setPass(password);
+        user.setPhone(phone);
+
+        Toast.makeText(getApplicationContext(), getString(R.string.toast_user_created), Toast.LENGTH_LONG).show();
+
+        return user;
     }
 }

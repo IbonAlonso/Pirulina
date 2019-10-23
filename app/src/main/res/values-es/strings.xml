@@ -16,6 +16,7 @@
     <string name="edit">Editar</string>
 
     <!-- TOASTS STRINGS -->
+    <string name="toast_something_gonne_wrong">Algo salio mal</string>
     <string name="toast_password_not_validated">La contraseña deben ser iguales en ambas</string>
     <string name="toast_user_created">Usuario creado con éxito</string>
     <string name="toast_login_succesful">Bienvenido!</string>
@@ -25,6 +26,8 @@
     <string name="toast_empty_username">Por favor rellene el campo de Nombre de Usuario</string>
     <string name="toast_empty_password">Por favor rellene el campo de Contraseña</string>
     <string name="toast_wrong_user">El usuario no existe</string>
+    <string name="toast_user_created_success">Usuario creado</string>
+    <string name="toast_user_updated_success">Usuario actualizado</string>
 
     <!-- DIALOG STRINGS -->
     <string name="dialog_logoff">¿Deseas cerrar sesión?</string>

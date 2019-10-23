@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.ibgo.pirulina.R;
 import com.ibgo.pirulina.activity.SignInActivity;
+import com.ibgo.pirulina.model.SessionDataController;
 import com.ibgo.pirulina.model.Util;
+import com.ibgo.pirulina.model.json.JSONController;
 import com.ibgo.pirulina.model.pojo.User;
 
 public class MyUserFragment extends Fragment {
@@ -31,6 +33,7 @@ public class MyUserFragment extends Fragment {
     private EditText mLogin, mName, mLast, mPhone, mPass, mRPass;
     private User mUser;
     private TableRow mTRPass, mTRRPass;
+    private SessionDataController controller;
 
     public MyUserFragment() {
         // Required empty public constructor
@@ -49,6 +52,7 @@ public class MyUserFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mUser = (User) getArguments().getSerializable(ARG_USER);
 
+        controller = SessionDataController.getInstance();
     }
 
     @Override
@@ -99,7 +103,6 @@ public class MyUserFragment extends Fragment {
             public void onClick(View v) {
                 mName.setEnabled(true);
                 mLast.setEnabled(true);
-                mPhone.setEnabled(true);
                 mTRPass.setVisibility(View.VISIBLE);
                 mPass.setEnabled(true);
                 mTRRPass.setVisibility(View.VISIBLE);
@@ -115,17 +118,17 @@ public class MyUserFragment extends Fragment {
                 if (!mPass.getText().toString().equals(mRPass.getText().toString())) {
                     Toast.makeText(getContext(), getString(R.string.toast_password_not_validated), Toast.LENGTH_LONG).show();
                 } else {
-                    SharedPreferences mPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor mEditor = mPreferences.edit();
-                    mEditor.putString("user", mLogin.getText().toString());
-                    mEditor.putString("name", mName.getText().toString());
-                    mEditor.putString("last", mLast.getText().toString());
-                    mEditor.putString("phone", mPhone.getText().toString());
-                    mEditor.putString("password", Util.md5(mPass.getText().toString()));
-                    mEditor.commit();
+                    updateUserSharedPrefs();
+                    if (Util.isNetworkAvailable(getContext())) {
+                        byte error = controller.updateUser(controller.getUser());
+                        if (error == JSONController.NO_ERROR) {
+                            Toast.makeText(getContext(), getString(R.string.toast_user_updated_success), Toast.LENGTH_SHORT).show();
+                        } else if (error == JSONController.OTHER_ERROR) {
+                            Toast.makeText(getContext(), getString(R.string.toast_something_gonne_wrong), Toast.LENGTH_SHORT).show();
+                        }
+                    }
                     mName.setEnabled(false);
                     mLast.setEnabled(false);
-                    mPhone.setEnabled(false);
                     mTRPass.setVisibility(View.INVISIBLE);
                     mPass.setEnabled(false);
                     mTRRPass.setVisibility(View.INVISIBLE);
@@ -137,6 +140,29 @@ public class MyUserFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void updateUserSharedPrefs() {
+        SharedPreferences mPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mPreferences.edit();
+        String login = mLogin.getText().toString();
+        String name = mName.getText().toString();
+        String last = mLast.getText().toString();
+        String phone = mPhone.getText().toString();
+        String password = Util.md5(mPass.getText().toString());
+        mEditor.putString("user", login);
+        mEditor.putString("name", name);
+        mEditor.putString("last", last);
+        mEditor.putString("phone", phone);
+        mEditor.putString("password", password);
+        User user = new User();
+        user.setLogin(login);
+        user.setLast(last);
+        user.setName(name);
+        user.setPass(password);
+        user.setPhone(phone);
+        controller.setUser(user);
+        mEditor.commit();
     }
 
     public void onButtonPressed(Uri uri) {

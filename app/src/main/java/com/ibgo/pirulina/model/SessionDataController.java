@@ -15,12 +15,16 @@ import com.ibgo.pirulina.model.pojo.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ibgo.pirulina.model.json.JSONBuilder.buildUser;
+
 /**
  * Clase encargada de almacenar los datos de la sesion.
  * Permite cambiar el usuario.
  */
 public class SessionDataController {
 
+    private static final String UPDATE = "UPDATE";
+    private static final String INSERT = "INSERT";
     private static SessionDataController ourInstance;
 
     private Util.Position mCurrentPos;
@@ -38,13 +42,21 @@ public class SessionDataController {
         mUser = new User();
     }
 
-    public boolean registerUser(User user) {
+    /*public boolean registerUser(User user) {
         byte error = JSONController.setData(JSONBuilder.build(user));
         if (error == JSONController.NO_ERROR) {
             this.mUser = user;
             return true;
         }
         return false;
+    }*/
+
+    public byte updateUser(User user){
+        return JSONController.sendUser(buildUser(user), UPDATE);
+    }
+
+    public byte insertUser(User user){
+        return JSONController.sendUser(buildUser(user), INSERT);
     }
 
     public void setCurrentPos(Context context) {

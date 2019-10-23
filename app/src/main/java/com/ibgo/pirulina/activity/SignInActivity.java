@@ -113,9 +113,16 @@ public class SignInActivity extends AppCompatActivity {
 
         if (isNetworkAvailable()) {
             byte errorCode = JSONController.logInUser(mUsername.getText().toString().trim(), Util.md5(mPassword.getText().toString().trim()));
-            switch (errorCode){
+            switch (errorCode) {
                 case JSONController.NO_ERROR:
                     correct = true;
+                    break;
+                case JSONController.INPUT_ERROR:
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_password), Toast.LENGTH_LONG).show();
+                    break;
+                case JSONController.USER_NOT_EXIST_ERROR:
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_user), Toast.LENGTH_LONG).show();
+                    break;
             }
         } else {
 

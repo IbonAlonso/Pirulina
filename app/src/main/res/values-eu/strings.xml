@@ -16,6 +16,7 @@
     <string name="edit">Editatu</string>
 
     <!-- TOASTS STRINGS -->
+    <string name="toast_something_gonne_wrong">Zerbait gaizki joan da</string>
     <string name="toast_password_not_validated">Pasahitza bietan izan behar da berdina</string>
     <string name="toast_user_created">Erabiltzailea sortuta</string>
     <string name="toast_login_succesful">Ongi Etorri!</string>
@@ -25,6 +26,8 @@
     <string name="toast_empty_password">Mesedez bete ezazu Pasahitza eremua</string>
     <string name="toast_other_error">Zerbait txarto joan da saioa hasten</string>
     <string name="toast_wrong_user">Erabiltzailea hori ez da zuzena</string>
+    <string name="toast_user_created_success">Erabiltzailea sortuta</string>
+    <string name="toast_user_updated_success">Erabiltzailea eguneratuta</string>
 
     <!-- DIALOG STRINGS -->
     <string name="dialog_logoff">Saioa itxi nahi duzu?</string>

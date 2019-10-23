@@ -1,5 +1,7 @@
 package com.ibgo.pirulina.model.json;
 
+import android.util.Log;
+
 import com.ibgo.pirulina.model.DatabaseObject;
 import com.ibgo.pirulina.model.SessionDataController;
 import com.ibgo.pirulina.model.pojo.Response;
@@ -10,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -27,6 +30,7 @@ import static com.ibgo.pirulina.model.json.JSONTag.TAG_CURRENT_USER;
 import static com.ibgo.pirulina.model.json.JSONTag.TAG_DETAILS;
 import static com.ibgo.pirulina.model.json.JSONTag.TAG_MESSAGE;
 import static com.ibgo.pirulina.model.json.JSONTag.TAG_REQUEST;
+import static com.ibgo.pirulina.model.json.JSONTag.TAG_RESPONSE;
 
 public abstract class JSONController {
 
@@ -37,6 +41,7 @@ public abstract class JSONController {
     public static final byte OTHER_ERROR = 1;
     public static final byte INPUT_ERROR = 2;
     public static final byte USER_NOT_EXIST_ERROR = 4;
+    public static final byte USER_NOT_UPDATE_ERROR = 5;
     public static final byte EMPTY = -1;
     public static final byte USER_EMPTY = 3;
 
@@ -48,10 +53,13 @@ public abstract class JSONController {
     private static final String MAIN_HOST = "http://85.61.150.74:3308/piruapi";
     private static final String FIND_USER = "/loginUser?";
     private static final String GET_USER = "/getUser?";
+    private static final String UPDATE_USER = "/updateUser";
+    private static final String INSERT_USER = "/insertUser";
     private static final String LOGIN_PARAM = "login=";
     private static final String PASS_PARAM = "password=";
-    public static final String URL_LOGIN_USER = "loginUser";
-    public static final String URL_INSERT_USER = "insertUser";
+    public static final String URI_LOGIN_USER = "loginUser";
+    public static final String URI_INSERT_USER = "insertUser";
+    public static final String URI_UPDATE_USER = "updateUser";
     private static final String USER_FIELD = "LOGIN";
     private static final String USER_TABLE = "USERS";
     private static final String PASS_FIELD = "PASSWORD";
@@ -59,6 +67,11 @@ public abstract class JSONController {
     /* *** Database Admin User *** */
     private static final String USERNAME = "Pirulina";
     private static final String PASSWORD = "dummy";
+    private static final String UPDATE = "UPDATE";
+    private static final String INSERT = "INSERT";
+    private static final String RESPONSE_NOT_UPDATED = "NOT_UPDATED";
+    private static final String RESPONSE_USER_CREATED = "USER_CREATED";
+    private static final String RESPONSE_USER_NOT_CREATED = "USER_NOT_CREATED";
 
     /* *** Default URLs *** */
     /*private static final String BASE_URL_GET = MAIN_HOST + "db=" + DB
@@ -80,19 +93,34 @@ public abstract class JSONController {
     private static User mCurrentUser;
     /* ///////// END OF CONFIGS ///////// */
 
-    public static byte setData(String jsonString) {
-        String result = doRequestPOST(jsonString);
+    public static byte sendUser(String jsonString, String action) {
+
+        byte resByte = NO_ERROR;
+
+        String userURL = MAIN_HOST;
+
+        if (action.equals(UPDATE)) {
+            userURL = userURL + UPDATE_USER;
+        } else if (action.equals(INSERT)) {
+            userURL = userURL + INSERT_USER;
+        }
+
+        String result = doRequestPOST(jsonString, userURL);
 
         try {
             JSONObject json = new JSONObject(result);
-            if (json.has(TAG_MESSAGE)) {
-                return OTHER_ERROR;
+            if (json.get(TAG_DETAILS).equals(RESPONSE_NOT_UPDATED)) {
+                resByte = USER_NOT_UPDATE_ERROR;
+            } else if (json.get(TAG_DETAILS).equals(RESPONSE_NOT_EXIST)) {
+                resByte = USER_NOT_EXIST_ERROR;
+            } else if (json.get(TAG_DETAILS).equals(RESPONSE_USER_NOT_CREATED)) {
+                resByte = USER_NOT_EXIST_ERROR;
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            return OTHER_ERROR;
+            resByte = OTHER_ERROR;
         }
-        return NO_ERROR;
+        return resByte;
     }
 
     public static byte logInUser(String username, String password) {
@@ -105,15 +133,17 @@ public abstract class JSONController {
             HashMap<String, List<DatabaseObject>> data = parseJSON(result);
 
             // Check for errors
-            if (((Response) (data.get(TAG_CURRENT_USER)).get(0)).getMessage().equals(RESPONSE_KO)) {
-                if (((Response) (data.get(TAG_CURRENT_USER)).get(0)).getDetails().equals(RESPONSE_WRONG_PASSWORD)) {
-                    return INPUT_ERROR;
-                }
-                if (((Response) (data.get(TAG_CURRENT_USER)).get(0)).getDetails().equals(RESPONSE_NOT_EXIST)) {
-                    return USER_NOT_EXIST_ERROR;
-                }
-                if (data.isEmpty()) {
-                    return USER_EMPTY;
+            if (data.containsKey(TAG_RESPONSE)) {
+                if (((Response) (data.get(TAG_RESPONSE)).get(0)).getMessage().equals(RESPONSE_KO)) {
+                    if (((Response) (data.get(TAG_RESPONSE)).get(0)).getDetails().equals(RESPONSE_WRONG_PASSWORD)) {
+                        return INPUT_ERROR;
+                    }
+                    if (((Response) (data.get(TAG_RESPONSE)).get(0)).getDetails().equals(RESPONSE_NOT_EXIST)) {
+                        return USER_NOT_EXIST_ERROR;
+                    }
+                    if (data.isEmpty()) {
+                        return USER_EMPTY;
+                    }
                 }
             }
 
@@ -161,15 +191,17 @@ public abstract class JSONController {
         return response;
     }
 
-    private static String doRequestPOST(String s) {
+    private static String doRequestPOST(String json, String url) {
         String response = null;
-        s = "json=".concat(s);
 
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(BASE_URL_SET).openConnection();
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
-            connection.getOutputStream().write(s.getBytes(StandardCharsets.UTF_8));
+            connection.setDoInput(true);
+            connection.getOutputStream().write(json.getBytes(StandardCharsets.UTF_8));
 
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
             StringBuilder builder = new StringBuilder();
@@ -181,10 +213,9 @@ public abstract class JSONController {
 
             response = builder.toString();
 
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("doResquesPOST", String.valueOf(e));
         }
 
         return response;
@@ -196,13 +227,12 @@ public abstract class JSONController {
         DatabaseObject object;
 
         JSONObject json = new JSONObject(jsonString);
-        JSONArray jsonData;
 
         byte errorCode = handleError(json);
         if (errorCode == NO_ERROR) { // If there has been no errors in the doRequest
             if (json.has(TAG_REQUEST)) {
                 switch ((String) json.get(TAG_REQUEST)) {
-                    case URL_LOGIN_USER:
+                    case URI_LOGIN_USER:
                         object = new Response();
                         data = new ArrayList<>();
                         data.add(object.fromJSON(json));
@@ -238,17 +268,13 @@ public abstract class JSONController {
                 }
             }*/
 
-            // Check if there is get_user in doRequest
-            if (json.has(TAG_CURRENT_USER)) {
-                JSONObject jsonObject = json.getJSONObject(TAG_CURRENT_USER);
-                object = new User();
-                data = new ArrayList<>();
-                data.add(object.fromJSON(jsonObject));
-                fullData.put(TAG_CURRENT_USER, data);
-            }
-
         } else if (errorCode == INPUT_ERROR) { // User input error
-            return fullData;
+            if (json.has(JSONTag.Response.TAG_MESSAGE)) {
+                object = new Response();
+                data = new ArrayList<>();
+                data.add(object.fromJSON(json));
+                fullData.put(TAG_RESPONSE, data);
+            }
         }
 
         return fullData;

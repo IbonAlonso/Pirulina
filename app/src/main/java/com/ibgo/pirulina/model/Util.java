@@ -1,5 +1,9 @@
 package com.ibgo.pirulina.model;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.security.MessageDigest;
@@ -19,6 +23,13 @@ public abstract class Util {
         String md5Hex = DigestUtils
                 .md5Hex(s).toUpperCase();
         return md5Hex;
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public static double calculateDistance(Position currentPos, Position targetPos) {

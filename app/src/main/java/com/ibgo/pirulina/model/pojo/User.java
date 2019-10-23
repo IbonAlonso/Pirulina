@@ -76,7 +76,7 @@ public class User implements Serializable, DatabaseObject {
         this.setPass(json.getString(JSONTag.User.TAG_PASSWORD));
         this.setName(json.getString(JSONTag.User.TAG_NAME));
         this.setLast(json.getString(JSONTag.User.TAG_LASTNAME));
-        this.setPhone(json.getString(JSONTag.User.TaG_PHONE));
+        this.setPhone(json.getString(JSONTag.User.TAG_PHONE));
 
         return this;
     }
