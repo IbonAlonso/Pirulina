@@ -15,7 +15,12 @@ import com.ibgo.pirulina.model.SessionDataController;
 import com.ibgo.pirulina.model.json.JSONController;
 import com.ibgo.pirulina.model.pojo.User;
 
+import java.io.IOException;
+import java.net.InetAddress;
+
 public class SplashActivity extends AppCompatActivity {
+
+    private static final String host = "http://85.61.150.74:3308/piruapi/ping";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +48,28 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), SignInActivity.class);
             } else {
                 User mUser = new User();
-                if (isNetworkAvailable()) {
-                    byte error = JSONController.logInUser(mPreferences.getString("user", ""), mPreferences.getString("password", ""));
-                    if (error == JSONController.NO_ERROR){
-                        intent = MainActivity.newIntent(getApplicationContext(), SessionDataController.getInstance().getUser());
+                try {
+                    if (isNetworkAvailable()) {
+                        if (InetAddress.getByName(host).isReachable(10000)) {
+                            byte error = JSONController.logInUser(mPreferences.getString("user", ""), mPreferences.getString("password", ""));
+                            if (error == JSONController.NO_ERROR) {
+                                intent = MainActivity.newIntent(getApplicationContext(), SessionDataController.getInstance().getUser());
+                            } else {
+                                intent = new Intent(getApplicationContext(), SignInActivity.class);
+                                finish();
+                            }
+                        }
                     } else {
-                        intent = new Intent(getApplicationContext(), SignInActivity.class);
-                        finish();
+                        mUser.setLogin(mPreferences.getString("user", ""));
+                        mUser.setName(mPreferences.getString("name", ""));
+                        mUser.setLast(mPreferences.getString("last", ""));
+                        mUser.setPhone(mPreferences.getString("phone", ""));
+                        mUser.setPass(mPreferences.getString("password", ""));
+                        SessionDataController.getInstance().setUser(mUser);
+                        intent = MainActivity.newIntent(getApplicationContext(), mUser);
                     }
-                } else {
-                    mUser.setLogin(mPreferences.getString("user", ""));
-                    mUser.setName(mPreferences.getString("name", ""));
-                    mUser.setLast(mPreferences.getString("last", ""));
-                    mUser.setPhone(mPreferences.getString("phone", ""));
-                    mUser.setPass(mPreferences.getString("password", ""));
-                    SessionDataController.getInstance().setUser(mUser);
-                    intent = MainActivity.newIntent(getApplicationContext(), mUser);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
             finish();
